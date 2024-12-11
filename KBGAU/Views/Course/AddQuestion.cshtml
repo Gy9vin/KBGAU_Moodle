@@ -1,0 +1,203 @@
+@model KBGAU.Models.AddQuestionViewModel
+@using KBGAU.Extensions
+@{
+    ViewData["Title"] = "Добавление вопросов";
+}
+
+<h2>Добавление вопросов</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="SaveQuestion" method="post">
+            <input type="hidden" asp-for="NewQuestion.CourseInfoId" />
+            <input type="hidden" asp-for="UserId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div> <!-- Вывод сообщений об ошибках -->
+            <div class="form-group">
+                <label>Тип вопроса</label>
+                <select asp-for="NewQuestion.Type" class="form-control" onchange="toggleAnswerOptions()">
+                    <option value="MultipleChoice">Множественный/Одиночный выбор</option>
+                    <option value="TrueFalse">Истина/Ложь</option>
+                    <option value="Matching">Соответствие</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Вопрос</label>
+                <textarea id="question-editor" class="form-control" asp-for="NewQuestion.Text"></textarea>
+            </div>
+            <div id="multiple-choice-options" class="form-group">
+                <label>Количество вариантов ответа</label>
+                <select class="form-control" id="answerCount" onchange="generateAnswerFields()">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <div class="form-group" id="answers-container">
+                <!-- Поля для ввода ответов будут добавлены здесь -->
+            </div>
+            <div id="true-false-options" class="form-group" style="display:none;">
+                <label>Ответ(ы)</label>
+                <div>
+                    <input type="radio" name="NewQuestion.Answers[0].IsCorrect" value="true" /> Истина
+                    <input type="radio" name="NewQuestion.Answers[0].IsCorrect" value="false" /> Ложь
+                </div>
+            </div>
+            <div id="matching-options" class="form-group" style="display:none;">
+                <label>Варианты</label>
+                <div id="matching-container">
+                    <!-- Поля для ввода соответствий будут добавлены здесь -->
+                </div>
+                <button type="button" style="margin-top: 10px" class="btn btn-secondary" onclick="addMatchingField()">Добавить соответствие</button>
+            </div>
+            <button type="submit" style="margin-top: 10px" class="btn btn-primary">Сохранить вопрос</button>
+        </form>
+
+        <!-- Новая форма для сохранения количества вопросов -->
+        <form asp-action="SaveQuestionCount" method="post" style="margin-top: 20px;">
+            <input type="hidden" name="courseId" value="@Model.CourseId" />
+            <input type="hidden" name="UserId" value="@Model.UserId" />
+            <button type="submit" class="btn btn-success">Сохранить курс</button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <h3>Вопросы</h3>
+        <p>Текущее количество вопросов: <span id="questionCount">@Model.Questions.Count</span></p>
+        <div class="temporary-questions-container">
+            <ul class="list-group" id="questionList">
+
+                @for (int i = 0; i < Model.Questions.Count; i++)
+                {
+                    var question = Model.Questions[i];
+                    <li class="list-group-item question-item">
+                        <a asp-action="EditQuestion" asp-route-questionId="@question.Id" class="btn-link">
+                            <strong>@(i + 1). @question.Text</strong>
+                        </a>
+                        <span style="padding-left: 10px">Тип вопроса: @question.Type.ToFriendlyString()</span> <!-- Отображение типа вопроса -->
+
+                        <form asp-action="DeleteQuestion" method="post" class="float-right" style="display:inline; float: right">
+                            <input type="hidden" name="questionId" value="@question.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                        </form>
+                        <ul>
+                            @foreach (var answer in question.Answers)
+                            {
+                                <li>@answer.Text (Правильный: @answer.IsCorrect)</li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+            </ul>
+        </div>
+        </div>
+</div>
+
+<script>
+    function generateAnswerFields() {
+        const answerCount = document.getElementById('answerCount').value;
+        const container = document.getElementById('answers-container');
+        container.innerHTML = '';
+
+        for (let i = 0; i < answerCount; i++) {
+            container.innerHTML += `
+                <div class="form-group">
+                    <label>Ответ ${i + 1}</label>
+                    <textarea class="form-control" name="NewQuestion.Answers[${i}].Text" placeholder="Ответ ${i + 1}"></textarea>
+                    <input type="checkbox" name="NewQuestion.Answers[${i}].IsCorrect" value="true" /> Правильный
+                </div>
+            `;
+        }
+    }
+
+    function toggleAnswerOptions() {
+        const questionType = document.querySelector("select[name='NewQuestion.Type']").value;
+        const multipleChoiceOptions = document.getElementById('multiple-choice-options');
+        const trueFalseOptions = document.getElementById('true-false-options');
+        const matchingOptions = document.getElementById('matching-options');
+
+        multipleChoiceOptions.style.display = questionType === 'MultipleChoice' ? 'block' : 'none';
+        trueFalseOptions.style.display = questionType === 'TrueFalse' ? 'block' : 'none';
+        matchingOptions.style.display = questionType === 'Matching' ? 'block' : 'none';
+    }
+
+    function addMatchingField() {
+        const container = document.getElementById('matching-container');
+        const index = container.children.length;
+        const newMatching = `
+            <div class="form-group">
+                <label>Соответствие ${index + 1}</label>
+                <div class="row">
+                    <div class="col-md-5">
+                        <textarea class="form-control" name="NewQuestion.Answers[${index}].Text" placeholder="Вопрос ${index + 1}"></textarea>
+                    </div>
+                    <div class="col-md-2 text-center">-</div>
+                    <div class="col-md-5">
+                        <textarea class="form-control" name="NewQuestion.Answers[${index}].MatchText" placeholder="Соответствие ${index + 1}"></textarea>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', newMatching);
+    }
+
+    function updateQuestionCount() {
+        const questionItems = document.querySelectorAll('.question-item');
+        const questionCount = questionItems.length;
+        document.getElementById('questionCount').textContent = questionCount;
+    }
+
+    window.onload = updateQuestionCount;
+
+    // Инициализация CKEditor с плагином MathType (если используется)
+    document.addEventListener("DOMContentLoaded", function() {
+        ClassicEditor
+            .create(document.querySelector('#question-editor'), {
+                extraPlugins: [MathType],
+                toolbar: {
+                    items: [
+                        'heading', '|',
+                        'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
+                        'MathType', 'ChemType', '|',
+                        'undo', 'redo'
+                    ]
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
+</script>
+
+<!-- Подключение библиотек CKEditor и MathType (если используются) -->
+<script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+<script src="https://www.wiris.net/demo/plugins/ckeditor5/latest/plugin.js"></script>
+
+<style>
+    .temporary-questions-container {
+        max-height: 500px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .temporary-questions-container::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    .temporary-questions-container::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 6px;
+    }
+
+    .temporary-questions-container::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    .float-right {
+        float: right;
+    }
+</style>

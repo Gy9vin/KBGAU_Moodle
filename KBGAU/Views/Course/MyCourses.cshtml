@@ -1,0 +1,38 @@
+@model List<KBGAU.Models.CourseInfo>
+
+@{
+    ViewData["Title"] = "Мои курсы";
+}
+
+<h2>Мои курсы</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Название дисциплины</th>
+        <th>Название программы</th>
+        <th>Курс</th>
+        <th>Контрольная точка</th>
+        <th>Семестр</th>
+        <th>Вопросов</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var course in Model)
+    {
+        <tr>
+            <td>@course.SubjectName</td>
+            <td>@course.ProgramName</td>
+            <td>@course.CourseNumber</td>
+            <td>@course.ControlPointNumber</td>
+            <td>@course.SemesterNumber</td>
+            <td>@course.QuestionCount</td>
+            <td>
+                <a style="padding: 5px" asp-action="AddQuestion" asp-route-courseId="@course.Id" class="btn btn-primary">Добавить вопросы</a>
+                <a style="padding: 5px" asp-action="EditCourse" asp-route-courseId="@course.Id" class="btn btn-secondary">Редактировать</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KBGAU", "KBGAU\KBGAU.csproj", "{98D8A4BE-2091-462B-A80D-1C7F48828A48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98D8A4BE-2091-462B-A80D-1C7F48828A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98D8A4BE-2091-462B-A80D-1C7F48828A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98D8A4BE-2091-462B-A80D-1C7F48828A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98D8A4BE-2091-462B-A80D-1C7F48828A48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
