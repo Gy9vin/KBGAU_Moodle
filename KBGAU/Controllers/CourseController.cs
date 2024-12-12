@@ -52,8 +52,6 @@ namespace KBGAU.Controllers
             };
             return View(model);
         }
-
-        [HttpPost]
 [HttpPost]
 public async Task<IActionResult> SaveQuestion(AddQuestionViewModel model)
 {
@@ -69,17 +67,18 @@ public async Task<IActionResult> SaveQuestion(AddQuestionViewModel model)
     // Нормализация текста вопроса
     var normalizedText = TextUtils.NormalizeText(question.Text);
 
-// Извлечение вопросов
+    // Извлечение вопросов
     var existingQuestions = _context.Questions
         .Where(q => q.CourseInfoId == question.CourseInfoId && q.UserId == question.UserId)
         .AsEnumerable()
-        .Select(q => new { q.Id, NormalizedText = TextUtils.NormalizeText(q.Text),q.Type })
+        .Select(q => new { q.Id, NormalizedText = TextUtils.NormalizeText(q.Text), q.Type })
         .ToList();
 
-// Проверка на дубликат
+    // Проверка на дубликат при совпадающих тексте и типе
     if (existingQuestions.Any(q => q.NormalizedText == normalizedText && q.Type == question.Type))
     {
         ModelState.AddModelError("", "Вопрос уже существует.");
+        
         if (!ModelState.IsValid)
         {
             var questions = _context.Questions
@@ -90,38 +89,62 @@ public async Task<IActionResult> SaveQuestion(AddQuestionViewModel model)
             return View("AddQuestion", model);
         }
     }
+    question.Answers = new List<Answer>();
 
-    if (question.Type == QuestionType.MultipleChoice && question.Answers != null)
+    // В зависимости от типа вопроса формируем заново список ответов
+    if (question.Type == QuestionType.MultipleChoice)
     {
-        foreach (var answer in question.Answers)
+        question.Answers = new List<Answer>();
+        int index = 0;
+        while (Request.Form.ContainsKey($"NewQuestion.Answers[{index}].Text") 
+               && !string.IsNullOrEmpty(Request.Form[$"NewQuestion.Answers[{index}].Text"]))
         {
+            var answer = new Answer
+            {
+                Text = Request.Form[$"NewQuestion.Answers[{index}].Text"],
+                IsCorrect = string.Equals(Request.Form[$"NewQuestion.Answers[{index}].IsCorrect"], "true", StringComparison.OrdinalIgnoreCase)
+            };
+
             if (string.IsNullOrEmpty(answer.Text))
             {
                 ModelState.AddModelError("", "Поле ответа не может быть пустым");
                 return RedirectToAction("AddQuestion", new { courseId = question.CourseInfoId });
             }
-            answer.QuestionId = question.Id;
+
+            question.Answers.Add(answer);
+            index++;
         }
     }
     else if (question.Type == QuestionType.TrueFalse)
     {
+        // При выборе "Истина/Ложь" сбрасываем старые ответы и создаём новые
         question.Answers = new List<Answer>
         {
-            new Answer { Text = "Истина", IsCorrect = string.Equals(Request.Form["NewQuestion.Answers[0].IsCorrect"], "true", StringComparison.OrdinalIgnoreCase) },
-            new Answer { Text = "Ложь", IsCorrect = string.Equals(Request.Form["NewQuestion.Answers[0].IsCorrect"], "false", StringComparison.OrdinalIgnoreCase) }
+            new Answer 
+            { 
+                Text = "Истина", 
+                IsCorrect = string.Equals(Request.Form["NewQuestion.Answers[0].IsCorrect"], "true", StringComparison.OrdinalIgnoreCase) 
+            },
+            new Answer 
+            { 
+                Text = "Ложь", 
+                IsCorrect = string.Equals(Request.Form["NewQuestion.Answers[0].IsCorrect"], "false", StringComparison.OrdinalIgnoreCase) 
+            }
         };
     }
     else if (question.Type == QuestionType.Matching)
     {
+        // Для Matching так же сбрасываем ответы и заполняем заново
         question.Answers = new List<Answer>();
         int index = 0;
-        while (Request.Form.ContainsKey($"NewQuestion.Answers[{index}].Text") && !string.IsNullOrEmpty(Request.Form[$"NewQuestion.Answers[{index}].Text"]))
+        while (Request.Form.ContainsKey($"NewQuestion.Answers[{index}].Text") 
+               && !string.IsNullOrEmpty(Request.Form[$"NewQuestion.Answers[{index}].Text"]))
         {
             var answer = new Answer
             {
                 Text = Request.Form[$"NewQuestion.Answers[{index}].Text"],
                 MatchText = Request.Form.ContainsKey($"NewQuestion.Answers[{index}].MatchText")
-                    ? Request.Form[$"NewQuestion.Answers[{index}].MatchText"].FirstOrDefault()  // Преобразование StringValues в строку
+                    ? Request.Form[$"NewQuestion.Answers[{index}].MatchText"].FirstOrDefault()
                     : null
             };
             question.Answers.Add(answer);

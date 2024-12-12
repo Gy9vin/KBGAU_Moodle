@@ -119,10 +119,35 @@
         const trueFalseOptions = document.getElementById('true-false-options');
         const matchingOptions = document.getElementById('matching-options');
 
+        // Получаем контейнеры для вариантов ответов
+        const answersContainer = document.getElementById('answers-container');
+        const matchingContainer = document.getElementById('matching-container');
+
+        // Скрываем/отображаем блоки в зависимости от выбранного типа
         multipleChoiceOptions.style.display = questionType === 'MultipleChoice' ? 'block' : 'none';
         trueFalseOptions.style.display = questionType === 'TrueFalse' ? 'block' : 'none';
         matchingOptions.style.display = questionType === 'Matching' ? 'block' : 'none';
+
+        // Очищаем поля от предыдущего типа вопроса
+        // Если текущий тип не MultipleChoice, очистим answers-container
+        if (questionType !== 'MultipleChoice') {
+            answersContainer.innerHTML = '';
+        }
+
+        // Если текущий тип не Matching, очистим matching-container
+        if (questionType !== 'Matching') {
+            matchingContainer.innerHTML = '';
+        }
+
+        // Для TrueFalse нет динамических полей (кроме радиокнопок, которые статичны), 
+        // так что ничего дополнительно чистить не нужно.
     }
+
+    // Данный вызов может быть полезен, если при загрузке страницы уже есть выбранный тип,
+    // чтобы скрыть ненужные поля
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleAnswerOptions();
+    });
 
     function addMatchingField() {
         const container = document.getElementById('matching-container');
