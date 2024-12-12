@@ -156,3 +156,4 @@
 /Users/gy9vin/KBGAU/KBGAU/obj/Debug/net8.0/KBGAU.pdb
 /Users/gy9vin/KBGAU/KBGAU/obj/Debug/net8.0/KBGAU.genruntimeconfig.cache
 /Users/gy9vin/KBGAU/KBGAU/obj/Debug/net8.0/ref/KBGAU.dll
+/Users/gy9vin/KBGAU/KBGAU/obj/Debug/net8.0/KBGAU.sourcelink.json

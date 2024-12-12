@@ -41,16 +41,20 @@ namespace KBGAU.Controllers
                 .Where(q => q.UserId == userId && q.CourseInfoId == courseId)
                 .Include(q => q.Answers)
                 .ToList();
+
             var model = new AddQuestionViewModel
             {
                 CourseId = courseId,
+                UserId = userId,
                 Questions = questions,
                 ExistingQuestions = existingQuestions,
                 NewQuestion = new Question { CourseInfoId = courseId }
             };
             return View(model);
         }
+
         [HttpPost]
+[HttpPost]
 public async Task<IActionResult> SaveQuestion(AddQuestionViewModel model)
 {
     var question = model.NewQuestion;
@@ -59,41 +63,32 @@ public async Task<IActionResult> SaveQuestion(AddQuestionViewModel model)
     if (string.IsNullOrEmpty(question.Text))
     {
         ModelState.AddModelError("", "Поле вопроса не может быть пустым");
+        return RedirectToAction("AddQuestion", new { courseId = question.CourseInfoId });
     }
-    
+
+    // Нормализация текста вопроса
     var normalizedText = TextUtils.NormalizeText(question.Text);
-    
+
+// Извлечение вопросов
     var existingQuestions = _context.Questions
         .Where(q => q.CourseInfoId == question.CourseInfoId && q.UserId == question.UserId)
-        .AsEnumerable()  
-        .Select(q => new { q.Id, q.Text })
+        .AsEnumerable()
+        .Select(q => new { q.Id, NormalizedText = TextUtils.NormalizeText(q.Text),q.Type })
         .ToList();
 
-
-    int? duplicateQuestionIndex = null;
-    for (int i = 0; i < existingQuestions.Count; i++)
+// Проверка на дубликат
+    if (existingQuestions.Any(q => q.NormalizedText == normalizedText && q.Type == question.Type))
     {
-        if (TextUtils.NormalizeText(existingQuestions[i].Text) == normalizedText)
+        ModelState.AddModelError("", "Вопрос уже существует.");
+        if (!ModelState.IsValid)
         {
-            duplicateQuestionIndex = i + 1; 
-            break;
+            var questions = _context.Questions
+                .Where(q => q.CourseInfoId == question.CourseInfoId && q.UserId == question.UserId)
+                .Include(q => q.Answers)
+                .ToList();
+            model.Questions = questions;
+            return View("AddQuestion", model);
         }
-    }
-
-    if (duplicateQuestionIndex.HasValue)
-    {
-        ModelState.AddModelError("", $"Вопрос уже существует. Совпадает с вопросом №{duplicateQuestionIndex.Value}.");
-    }
-
-    if (!ModelState.IsValid)
-    {
-        var questions = _context.Questions
-            .Where(q => q.CourseInfoId == question.CourseInfoId && q.UserId == question.UserId)
-            .Include(q => q.Answers)
-            .ToList();
-            
-        model.Questions = questions;
-        return View("AddQuestion", model);  
     }
 
     if (question.Type == QuestionType.MultipleChoice && question.Answers != null)
@@ -103,7 +98,7 @@ public async Task<IActionResult> SaveQuestion(AddQuestionViewModel model)
             if (string.IsNullOrEmpty(answer.Text))
             {
                 ModelState.AddModelError("", "Поле ответа не может быть пустым");
-                return View("AddQuestion", model);  
+                return RedirectToAction("AddQuestion", new { courseId = question.CourseInfoId });
             }
             answer.QuestionId = question.Id;
         }
@@ -126,7 +121,7 @@ public async Task<IActionResult> SaveQuestion(AddQuestionViewModel model)
             {
                 Text = Request.Form[$"NewQuestion.Answers[{index}].Text"],
                 MatchText = Request.Form.ContainsKey($"NewQuestion.Answers[{index}].MatchText")
-                    ? Request.Form[$"NewQuestion.Answers[{index}].MatchText"].FirstOrDefault()  
+                    ? Request.Form[$"NewQuestion.Answers[{index}].MatchText"].FirstOrDefault()  // Преобразование StringValues в строку
                     : null
             };
             question.Answers.Add(answer);
@@ -136,7 +131,8 @@ public async Task<IActionResult> SaveQuestion(AddQuestionViewModel model)
 
     _context.Questions.Add(question);
     await _context.SaveChangesAsync();
-    
+
+    // Обновление количества вопросов
     var course = await _context.CourseInfos.FindAsync(question.CourseInfoId);
     if (course != null)
     {

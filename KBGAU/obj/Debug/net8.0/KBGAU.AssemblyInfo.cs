@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KBGAU")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e578968bfe1f37f558d3a3442b8e3b9c9f5f12bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("KBGAU")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KBGAU")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

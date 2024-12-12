@@ -8,7 +8,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74119bec-7f2e-48ae-a454-ad7357e1cee3" name="Changes" comment="" />
+    <list default="true" id="74119bec-7f2e-48ae-a454-ad7357e1cee3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.KBGAU/.idea/dataSources/d1af2c3e-aa06-45c6-9e80-97534a183857.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KBGAU/.idea/dataSources/d1af2c3e-aa06-45c6-9e80-97534a183857.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.KBGAU/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KBGAU/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/Controllers/CourseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/Controllers/CourseController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/Views/Course/AddQuestion.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/Views/Course/AddQuestion.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/bin/Debug/net8.0/KBGAU.dll" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/bin/Debug/net8.0/KBGAU.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/bin/Debug/net8.0/KBGAU.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/bin/Debug/net8.0/KBGAU.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/kbgau.db" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/kbgau.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/kbgau.db-shm" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/kbgau.db-shm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/kbgau.db-wal" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/kbgau.db-wal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.dll" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/KBGAU.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/ref/KBGAU.dll" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/ref/KBGAU.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/refint/KBGAU.dll" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/obj/Debug/net8.0/refint/KBGAU.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/obj/rider.project.restore.info" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,6 +44,24 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Gy9vin&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Gy9vin/KBGAU_Moodle.git&quot;,
+    &quot;accountId&quot;: &quot;84c7d049-04f6-444f-a9c7-2a654405a8fd&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/77fc0eb92b774686bbae91cb92331703d83600/7c/616b8372/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -32,6 +69,7 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2pnuxwc5hgiB4SZ1h2VlBAEv2aN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -41,6 +79,8 @@
     ".NET Launch Settings Profile.KBGAU: http.executor": "Run",
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -92,7 +132,8 @@
       <option name="presentableId" value="Default" />
       <updated>1733414410425</updated>
       <workItem from="1733414411467" duration="32657000" />
-      <workItem from="1733587481264" duration="21023000" />
+      <workItem from="1733587481264" duration="27757000" />
+      <workItem from="1734033240445" duration="2690000" />
     </task>
     <servers />
   </component>
@@ -100,6 +141,17 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
