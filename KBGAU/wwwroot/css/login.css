@@ -1,0 +1,49 @@
+.login-container {
+    margin:100px auto;
+    display: flex;
+    height: 60vh;
+    width: 100%;
+    border-radius: 10px; /* Закругленные углы для контейнера */
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.login-left {
+    background: url('/images/loginImage.png') no-repeat center center;
+    background-size: cover; /* Растягиваем изображение */
+    flex: 2;
+}
+
+.login-right {
+    flex: 1;
+    
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 10px; /* Закругленные углы для правой части */
+}
+
+.login-form {
+    
+    padding: 20px;
+    
+    border-radius: 10px; /* Закругленные углы для формы */
+   
+    text-align: center; /* Центрирование контента */
+}
+
+.login-form img {
+    width: 100px; /* Ширина логотипа */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+
+.login-form .form-group {
+    margin-bottom: 15px;
+}
+
+.login-form button {
+    width: auto;
+    margin-top: 15px; /* Отступ сверху */
+    float: right; /* Перемещаем кнопку в правую часть */
+}
+.navbar { padding-left: 50px; padding-right: 50px;}

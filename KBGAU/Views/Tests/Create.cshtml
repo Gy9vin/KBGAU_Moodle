@@ -1,0 +1,56 @@
+@model List<KBGAU.Models.Question>
+
+@{
+    ViewData["Title"] = "Создание тестов";
+}
+
+<h2>Создание тестов</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="SaveTemporaryQuestion" method="post">
+            <div class="form-group">
+                <label>Вопрос</label>
+                <input type="text" class="form-control" name="Text" />
+            </div>
+
+            <div class="form-group">
+                <label>Ответы</label>
+                <div id="answers-container">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="Answers[0].Text" placeholder="Ответ 1" />
+                        <input type="checkbox" name="Answers[0].IsCorrect" /> Правильный
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="Answers[1].Text" placeholder="Ответ 2" />
+                        <input type="checkbox" name="Answers[1].IsCorrect" /> Правильный
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Сохранить вопрос временно</button>
+        </form>
+
+        <form asp-action="SaveFinalQuestions" method="post" style="margin-top: 20px;">
+            <button type="submit" class="btn btn-success">Сохранить все вопросы и ответы</button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <h3>Временные вопросы</h3>
+        <ul class="list-group">
+            @foreach (var question in Model)
+            {
+                <li class="list-group-item">
+                    <strong>@question.Text</strong>
+                    <ul>
+                        @foreach (var answer in question.Answers)
+                        {
+                            <li>@answer.Text (Правильный: @answer.IsCorrect)</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

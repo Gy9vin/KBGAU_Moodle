@@ -1,0 +1,46 @@
+@model KBGAU.Models.CourseInfo
+
+@{
+    ViewData["Title"] = "Редактировать курс";
+}
+
+<h2>Редактировать курс</h2>
+
+<form asp-action="EditCourse" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="UserId" /> <!-- Добавьте это поле, если требуется -->
+    <div class="form-group">
+        <label>Название дисциплины</label>
+        <input type="text" class="form-control" asp-for="SubjectName" />
+    </div>
+    <div class="form-group">
+        <label>Название программы</label>
+        <input type="text" class="form-control" asp-for="ProgramName" />
+    </div>
+    <div class="form-group">
+        <label>Номер курса</label>
+        <select class="form-control" asp-for="CourseNumber">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Номер контрольной точки</label>
+        <select class="form-control" asp-for="ControlPointNumber">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Номер семестра</label>
+        <select class="form-control" asp-for="SemesterNumber">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+</form>
