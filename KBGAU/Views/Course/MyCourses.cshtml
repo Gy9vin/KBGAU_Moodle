@@ -31,6 +31,7 @@
             <td>
                 <a style="padding: 5px" asp-action="AddQuestion" asp-route-courseId="@course.Id" class="btn btn-primary">Добавить вопросы</a>
                 <a style="padding: 5px" asp-action="EditCourse" asp-route-courseId="@course.Id" class="btn btn-secondary">Редактировать</a>
+                <a class="btn btn-primary" onclick="importQuestions(@course.Id, 4147)">Импортировать вопросы</a>
             </td>
         </tr>
     }

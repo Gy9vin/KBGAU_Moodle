@@ -1,3 +1,4 @@
+using Import2Moodle;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using KBGAU.Data;
@@ -7,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Добавьте контекст базы данных
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Зарегистрируйте HttpClient
+builder.Services.AddHttpClient<MoodleService>();
 
 // Добавьте аутентификацию с использованием куки
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -44,6 +48,5 @@ app.UseEndpoints(endpoints =>
         name: "default",
         pattern: "{controller=Account}/{action=Login}/{id?}");
 });
-
 
 app.Run();

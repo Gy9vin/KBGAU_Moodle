@@ -8,9 +8,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74119bec-7f2e-48ae-a454-ad7357e1cee3" name="Changes" comment="/">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="74119bec-7f2e-48ae-a454-ad7357e1cee3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/KBGAU/Controllers/Import2Moodle.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.KBGAU/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KBGAU/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/Models/EditQuestionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/Models/EditQuestionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/Views/Course/AddQuestion.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/Views/Course/AddQuestion.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/Views/Course/EditQuestion.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/Views/Course/EditQuestion.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KBGAU/Views/Course/MyCourses.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/KBGAU/Views/Course/MyCourses.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,23 +65,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.KBGAU: http.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "liveEdit",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.KBGAU: http.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;liveEdit&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.KBGAU: http">
     <configuration name="KBGAU: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/KBGAU/KBGAU.csproj" />
@@ -119,7 +124,12 @@
       <updated>1733414410425</updated>
       <workItem from="1733414411467" duration="32657000" />
       <workItem from="1733587481264" duration="27757000" />
-      <workItem from="1734033240445" duration="5675000" />
+      <workItem from="1734033240445" duration="6685000" />
+      <workItem from="1734112890423" duration="55000" />
+      <workItem from="1734162790040" duration="6857000" />
+      <workItem from="1734283360306" duration="5576000" />
+      <workItem from="1734370525433" duration="1898000" />
+      <workItem from="1734799240541" duration="348000" />
     </task>
     <task id="LOCAL-00001" summary="Обновление">
       <option name="closed" value="true" />
@@ -137,7 +147,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734038405514</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Обновление Визуала">
+      <option name="closed" value="true" />
+      <created>1734038994632</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1734038994632</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,7 +178,8 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Обновление" />
     <MESSAGE value="/" />
-    <option name="LAST_COMMIT_MESSAGE" value="/" />
+    <MESSAGE value="Обновление Визуала" />
+    <option name="LAST_COMMIT_MESSAGE" value="Обновление Визуала" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

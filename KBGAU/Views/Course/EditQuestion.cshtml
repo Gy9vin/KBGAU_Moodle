@@ -1,45 +1,130 @@
 @model KBGAU.Models.EditQuestionViewModel
-
+@using KBGAU.Extensions
 @{
     ViewData["Title"] = "Редактирование вопроса";
 }
 
 <h2>Редактирование вопроса</h2>
 
-<form asp-action="EditQuestion" method="post">
-    <input type="hidden" asp-for="QuestionId" />
-    <input type="hidden" asp-for="CourseInfoId" />
-    <div class="form-group">
-        <label asp-for="Text" class="control-label"></label>
-        <input asp-for="Text" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Type" class="control-label"></label>
-        <select asp-for="Type" class="form-control">
-            <option value="MultipleChoice">Множественный выбор</option>
-            <option value="TrueFalse">Истина/Ложь</option>
-            <option value="Matching">Соответствие</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Ответы</label>
-        <div id="answers-container">
-            @for (int i = 0; i < Model.Answers.Count; i++)
-            {
-                <div class="form-group">
-                    <label asp-for="Answers[i].Text" class="control-label">Ответ @(i + 1)</label>
-                    <input asp-for="Answers[i].Text" class="form-control" />
-                    <input type="hidden" asp-for="Answers[i].Id" />
-                    <input type="hidden" asp-for="Answers[i].QuestionId" />
-                    @if (Model.Type == QuestionType.Matching)
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="SaveEditedQuestion" method="post">
+            <input type="hidden" asp-for="QuestionId" />
+            <input type="hidden" asp-for="CourseInfoId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Тип вопроса -->
+            <div class="form-group" style="margin-bottom: 5px;">
+                <label>Тип вопроса</label>
+                <select asp-for="Type" class="form-control" onchange="toggleAnswerOptions()">
+                    @foreach (var type in Enum.GetValues(typeof(QuestionType)).Cast<QuestionType>())
                     {
-                        <label asp-for="Answers[i].MatchText" class="control-label">Соответствие @(i + 1)</label>
-                        <input asp-for="Answers[i].MatchText" class="form-control" />
+                        <option value="@type" selected="@(Model.Type == type ? "selected" : null)">
+                            @type
+                        </option>
                     }
-                    <input type="checkbox" asp-for="Answers[i].IsCorrect" /> Правильный
+                </select>
+            </div>
+
+            <!-- Текст вопроса -->
+            <div class="form-group" style="margin-bottom: 5px;">
+                <label asp-for="Text">Текст вопроса</label>
+                <textarea asp-for="Text" class="form-control"></textarea>
+            </div>
+
+            <!-- Поля для множественного выбора -->
+            <div id="multipleChoiceFields" style="display:none; margin-bottom: 5px;">
+                <div class="form-group">
+                    <label>Варианты ответа</label>
+                    <div id="choicesContainer">
+                        @for (int i = 0; i < Model.Answers.Count; i++)
+                        {
+                            <div class="input-group" style="margin-bottom: 5px;">
+                                <input type="text" asp-for="Answers[i].Text" class="form-control" placeholder="Вариант @i" />
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" name="CorrectAnswer" value="@i" @(Model.Answers[i].IsCorrect ? "checked" : "") />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="addChoice()">Добавить вариант</button>
                 </div>
-            }
-        </div>
+            </div>
+
+            <!-- Поля для истины/лжи -->
+            <div id="trueFalseFields" style="display:none; margin-bottom: 5px;">
+                <div class="form-group">
+                    <label>Правильный ответ</label>
+                    <div>
+                        <label><input type="radio" asp-for="IsTrue" value="true" /> Истина</label>
+                    </div>
+                    <div>
+                        <label><input type="radio" asp-for="IsTrue" value="false" /> Ложь</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Поля для соответствия -->
+            <div id="matchingFields" style="display:none; margin-bottom: 5px;">
+                <div class="form-group">
+                    <label>Соответствие</label>
+                    <div id="matchingContainer">
+                        @for (int i = 0; i < Model.Answers.Count; i += 2)
+                        {
+                            <div class="input-group" style="margin-bottom: 5px;">
+                                <input type="text" class="form-control" value="@Model.Answers[i].Text" placeholder="Левая часть" />
+                                <input type="text" class="form-control" value="@Model.Answers[i + 1].Text" placeholder="Правая часть" />
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="addMatchingPair()">Добавить пару</button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-</form>
+</div>
+
+<script>
+    function toggleAnswerOptions() {
+        const type = document.querySelector('[name="Type"]').value;
+        document.getElementById('multipleChoiceFields').style.display = type === 'MultipleChoice' ? 'block' : 'none';
+        document.getElementById('trueFalseFields').style.display = type === 'TrueFalse' ? 'block' : 'none';
+        document.getElementById('matchingFields').style.display = type === 'Matching' ? 'block' : 'none';
+    }
+
+    function addChoice() {
+        const container = document.getElementById('choicesContainer');
+        const index = container.children.length;
+        const div = document.createElement('div');
+        div.className = 'input-group';
+        div.style.marginBottom = '5px';
+        div.innerHTML = `
+            <input type="text" name="Answers[${index}].Text" class="form-control" placeholder="Вариант ${index}" />
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <input type="radio" name="CorrectAnswer" value="${index}" />
+                </div>
+            </div>
+        `;
+        container.appendChild(div);
+    }
+
+    function addMatchingPair() {
+        const container = document.getElementById('matchingContainer');
+        const div = document.createElement('div');
+        div.className = 'input-group';
+        div.style.marginBottom = '5px';
+        div.innerHTML = `
+            <input type="text" class="form-control" placeholder="Левая часть" />
+            <input type="text" class="form-control" placeholder="Правая часть" />
+        `;
+        container.appendChild(div);
+    }
+
+    // Инициализация отображения полей при загрузке страницы
+    document.addEventListener('DOMContentLoaded', toggleAnswerOptions);
+</script>

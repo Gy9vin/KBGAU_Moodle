@@ -56,10 +56,8 @@
         </form>
 
         <!-- Новая форма для сохранения количества вопросов -->
-        <form asp-action="SaveQuestionCount" method="post" style="margin-top: 20px;">
-            <input type="hidden" name="courseId" value="@Model.CourseId" />
-            <input type="hidden" name="UserId" value="@Model.UserId" />
-            <button type="submit" class="btn btn-success">Сохранить курс</button>
+        <form asp-controller="Moodle" asp-action="ImportQuestions" method="post" style="margin-top: 10px;">
+            <button type="submit" class="btn btn-info">Импортировать вопросы в Moodle</button>
         </form>
     </div>
 
@@ -76,16 +74,26 @@
                         <a asp-action="EditQuestion" asp-route-questionId="@question.Id" class="btn-link">
                             <strong>@(i + 1). @question.Text</strong>
                         </a>
-                        <span style="padding-left: 10px">Тип вопроса: @question.Type.ToFriendlyString()</span> <!-- Отображение типа вопроса -->
+                        
 
                         <form asp-action="DeleteQuestion" method="post" class="float-right" style="display:inline; float: right">
                             <input type="hidden" name="questionId" value="@question.Id" />
                             <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
                         </form>
+                        <br/>
+                        <span style="padding-left: 10px">Тип вопроса: @question.Type.ToFriendlyString()</span> <!-- Отображение типа вопроса -->
                         <ul>
                             @foreach (var answer in question.Answers)
                             {
-                                <li>@answer.Text (Правильный: @answer.IsCorrect)</li>
+                                <li>@if (answer.IsCorrect == true)
+                                    {
+                                        <strong>@answer.Text</strong>
+                                    }
+                                    else
+                                    {
+                                        @answer.Text
+                                    }
+                                </li>
                             }
                         </ul>
                     </li>
